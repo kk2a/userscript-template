@@ -3,14 +3,14 @@ body {
     line-height: 1.6;
     margin: 0;
     padding: 0;
-    background-color: #f1f1f1; /* 背景色に#E9FFF9を使用 */
+    background-color: #f1f1f1; 
     display: flex;
     flex-direction: column;
     min-height: 100vh;
 }
 
 header {
-    background-color: #1b365d;
+    background-color: #009fad;
     color: #333; /* テキスト色を暗めの色に変更してコントラストを確保 */
     padding: 1rem 0;
     text-align: center;
@@ -34,7 +34,7 @@ h1 {
     color: #fff; /* 見出しの色を暗めにして読みやすさを確保 */
 }
 h2, h3 {
-    color: #333; /* 見出しの色を暗めにして読みやすさを確保 */
+    color: #1b365d; /* 見出しの色を暗めにして読みやすさを確保 */
 }
 
 ul {
