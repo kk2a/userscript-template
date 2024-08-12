@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ユーザースクリプトの技術解説</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <header>
+        <h1>ユーザースクリプト入門</h1>
+    </header>
+    <main>
+        <section>
+            <h2>はじめに</h2>
+            <p> 競技プログラミングをしているときに，ユーザースクリプトのありがたみをよく感じます．例えば，AtCoderのコンテスト中に，その時点でのパフォーマンスを見えるようにするスクリプトは，そのコンテストでの立ち回りが大きく変わることになるのでかなり重宝しています．</p>
+            <p> ここでは，順位表の「カスタマイズ」の折り畳みが邪魔だなと思ったので，折り畳みを消し去るようなスクリプトを作り，その作成過程をまとめて次作りたくなったらいこうと思います．</p>
+            <p>この記事に関連するファイルなどは，<a href="https://github.com/kk2a/userscript-template">ここ</a>からすべて見ることができます．</p>
+            <img src="ranking.png" class="centered-image">
+            <figcaption style="text-align: center;">AtCoderの順位表．初期状態ではカスタマイズパネルが折り畳まれている．</figcaption>
+        </section>
+        <section>
+            <h2>スクリプトの解説</h2>
+            たいしたことないので，コメントを読めばいいです．基本的には，htmlとのにらめっこでした．
+            <h3><a href="https://github.com/kk2a/userscript-template/atcoder-customize-panel-autoexpand.js">atcoder-customize-panel-autoexpand.js</a></h3>
+            <pre><code class="line-numbers">// ==UserScript==
+// @name         AtCoder Customize Panel Auto-Expand
+// @namespace    http://tampermonkey.net/
+// @version      0.3
+// @description  Always expand the "Customize" panelAtCoder standings page at initial load
+// @author       kk2a
+// @match        https://atcoder.jp/contests/*/standings*
+// @grant        none
+// ==/UserScript==
+
+(function() {
+    'use strict';
+
+    // ページが完全にロードされた際に実行
+    window.addEventListener('load', () => {
+        // 遅延を設定して確実にDOMがロードされるのを待つ
+        setTimeout(() => {
+            // 順位表カスタマイズパネルの親要素を取得
+            const panelHeading = document.getElement('standings-panel-heading');
+
+            // カスタマイズパネルは存在するか？
+            if (panelHeading) {
+                // トリガーボタン（見出し部分）を取得
+                const toggleButton = panelHeadquerySelector('#standings-heading-div');
+
+                // トリガーボタンは存在するか？
+                if (toggleButton) {
+                    // クリックイベントをシミュレーネルを展開
+                    toggleButton.click();
+                }
+            }
+        }, 1000); // 1秒待ってから実行
+    });
+})();       </code></pre>
+        </section>
+        <section>
+            <h2>実行結果</h2>
+            <h3>通常時</h3>
+            スクリプトを実行していないときは，折り畳みを解除した状態でもリロードすると元に戻ってしまいます．
+            <img src="result/before_1.jpg" alt="スクリプトを実行していないとき" class="centered-image">
+            <figcaption style="text-align: center;">スクリプトを実行していないとき．リロード前</figcaption>
+            <div style="height: 10px;"></div>
+            <img src="result/before_2.jpg" alt="スクリプトを実行していないとき" class="centered-image">
+            <figcaption style="text-align: center;">スクリプトを実行していないとき．リロード後</figcaption>
+            <div style="height: 10px;"></div>
+
+            <h3>スクリプトを実行しているとき</h3>
+            スクリプトを実行すると，折り畳みが解除されます．
+            <img src="result/after_1.jpg" alt="スクリプトを実行しているとき" class="centered-image">
+            <figcaption style="text-align: center;">スクリプトを実行しているとき．リロード前</figcaption>
+            <div style="height: 10px;"></div>
+            <img src="result/after_2.jpg" alt="スクリプトを実行しているとき" class="centered-image">
+            <figcaption style="text-align: center;">スクリプトを実行しているとき．リロード後</figcaption>
+        </section>
+        <section>
+            <h2>おわりに</h2>
+            <p>今回は，AtCoderの順位表のカスタマイズパネルを自動で展開するスクリプトを作成しました．ユーザスクリプトは，前から自作したいなとは思っていたのですが，自分が欲しいなと思った機能はすでに実装されていてたので，今回のような小さなスクリプトを作成することにしました．</p>
+            <p>コンテスト中はちょっともたつくだけで，嫌な気分になるのでこういう小さいことでも結構得をすると思っています．</p>
+            <p>ありがとうございました．</p>
+        </section>
+        <section>
+            <h2>補遺</h2>
+            <ul>
+                <li>ユーザースクリプトの実行は，Tampermonkeyを使用しました．</li>
+                <li>作成したユーザースクリプトをGreasy Forkなどで公開し，どの人も簡単にダウンロードできるようにすることもできましたが，あまりにも規模が小さいのでこのスクリプトをGreasy Forkで公開はしていません．</li>
+            </ul>
+        </section>
+    </main>
+    <footer>
+        <p style="font-size: 14px;">&copy; 2024 ユーザースクリプト技術解説</p>
+    </footer>
+</body>
+</html>
